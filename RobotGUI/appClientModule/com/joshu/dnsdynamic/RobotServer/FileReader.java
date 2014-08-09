@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class FileReader {
 
-	
-	
 	public ArrayList<String> read(Path path){
 		Charset charset = Charset.forName("US-ASCII");
 		ArrayList<String> al = new ArrayList<String>();

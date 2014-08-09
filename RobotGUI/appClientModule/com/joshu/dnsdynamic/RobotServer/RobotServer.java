@@ -17,7 +17,8 @@ public class RobotServer {
 	private ServerSocket serverSocket;
 	private PrintWriter out;
 	private BufferedReader in;
-	private ArrayList<String> tempList;
+	private InputProtocol iProt;
+	private String dataOut, dataIn;
 	
 	RobotServer(){
 		 try {
@@ -44,24 +45,33 @@ public class RobotServer {
 			e.printStackTrace();
 		}
 	}
-	public void writeData(String filePath){
-		Path p1 = Paths.get("/Temps.txt");
-		int counter = 0;
-		FileReader r = new FileReader();
-		tempList = r.read(p1);
-		while(counter < tempList.size()){
-			//System.out.println(tempList.get(counter));
-			out.println(tempList.get(counter));
-			counter++;
+	
+	public void initComm(){
+		iProt = new InputProtocol();
+		dataOut = iProt.processInput(null);
+		out.println(dataOut);
+	}
+	
+	public void mainLoop(){
+		try {
+			while((dataIn = in.readLine()) != null){
+				dataOut = iProt.processInput(dataIn);
+				out.println(dataOut);
+				if(dataOut == "Close"){
+					out.write("Closing");
+					break;
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 	//test main
 	public static void main(String [] args){
-		
 		RobotServer s = new RobotServer();
-		System.out.println("Made bot");
-		s.writeData("/Temps.txt");
+		s.initComm();
+		s.mainLoop();
 	}
 	
 }
