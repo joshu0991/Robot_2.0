@@ -81,7 +81,6 @@ public class MainPanel extends JPanel implements ActionListener{
 		breaks = new JButton("Break");
 		breaks.setMnemonic(KeyEvent.VK_E);
 		breaks.addActionListener(this);
-	
 		
 		//radio speed buttons
 		speed = new JLabel("Speed");
