@@ -1,4 +1,4 @@
-package com.joshu.dnsdynamic.ClientGUI;
+package com.joshu.dnsdynamic.ClientGUI.Logic;
 
 import java.io.BufferedReader;
 import java.io.IOException;
