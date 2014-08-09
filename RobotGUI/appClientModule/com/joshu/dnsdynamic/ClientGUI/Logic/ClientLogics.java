@@ -14,10 +14,11 @@ public class ClientLogics {
 	private PrintWriter out;
 	private BufferedReader in;
 	
-	ClientLogics(String hostName, int portNum){
+	public ClientLogics(String hostName, String port){
 		this.hostName = hostName;
-		this.portNum = portNum;
-		
+		this.portNum = Integer.parseInt(port);
+		System.out.println("Host name " + hostName);
+		System.out.println("Port " + port);
 		try {
 			sock = new Socket(hostName, portNum);
 			out = new PrintWriter(sock.getOutputStream(), true);
@@ -27,4 +28,11 @@ public class ClientLogics {
 			e.printStackTrace();
 		}
 	}
+	
+	//test main
+	/*
+	public static void main(String [] args){
+		
+	}
+	*/
 }

@@ -67,11 +67,12 @@ public class RobotServer {
 			e.printStackTrace();
 		}
 	}
+	/*
 	//test main
 	public static void main(String [] args){
 		RobotServer s = new RobotServer();
 		s.initComm();
 		s.mainLoop();
 	}
-	
+	*/
 }
