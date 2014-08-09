@@ -14,7 +14,7 @@ public class InputProtocol {
 			outPut = "Close";
 		}else if(input == null){
 			outPut = "Hello";
-		}else if(input == "Temp"){
+		}else if(input.equals("Temp")){
 			outPut = writeData("/Temps.txt");
 		}
 		return outPut;
@@ -29,6 +29,7 @@ public class InputProtocol {
 		while(counter < tempList.size()){
 			//System.out.println(tempList.get(counter));
 			data+=tempList.get(counter) + " ";
+			System.out.println(data);
 			counter++;
 		}
 		return data;
