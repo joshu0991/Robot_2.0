@@ -20,8 +20,9 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JMenuBar menuBar;
 	private JMenu connectMenu;
 	private JMenuItem connectItem;
-	private ClientLogics logs;
+	private ClientLogics temp;
 	private String [] addr;
+	private String temperature;
 	
 	public MainFrame(){
 		super("Robot");
@@ -49,14 +50,20 @@ public class MainFrame extends JFrame implements ActionListener{
 		addr[1] = port;
 	}
 	
+	public String getTemperature(){
+		return temperature;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getActionCommand().equals("New Connection")) {
-		String url = JOptionPane.showInputDialog(this, "Enter the the location", "place.example.com:9454");
+		String url = JOptionPane.showInputDialog(this, "Enter the the location", "example.location.com:9454");
 		buildAddr(url);
-		logs = new ClientLogics(addr[0], addr[1]);
+		temp = new ClientLogics(addr[0], addr[1], "Temp");
+		Thread t = new Thread(temp);
+		t.start();
 		}
 	}
-	
+
 }

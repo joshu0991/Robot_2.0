@@ -5,6 +5,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -12,6 +19,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import com.joshu.dnsdynamic.ClientGUI.Logic.*;
 
 public class MainPanel extends JPanel implements ActionListener{
 
@@ -40,6 +50,10 @@ public class MainPanel extends JPanel implements ActionListener{
 	private ImageIcon downIm;
 	private ImageIcon leftIm;
 	private ImageIcon rightIm;
+	private JLabel temp;
+	private JLabel date;
+	private JTextField tempField;
+	private JTextField dateField;
 ////////////////////////////////////////////////////////////////////////////	
 	
 	public MainPanel()
@@ -47,6 +61,8 @@ public class MainPanel extends JPanel implements ActionListener{
 		setLayout(new BorderLayout());
 		createComponents();
 		addComponentsWest();
+		addComponentsSouth();
+		add(southPan, BorderLayout.SOUTH);
 		add(westPan, BorderLayout.WEST);
 	}
 
@@ -104,6 +120,12 @@ public class MainPanel extends JPanel implements ActionListener{
 		radioPanel.add(low);
 		radioPanel.add(stop);	
 		
+		//Text fields
+		temp = new JLabel("Temperature:");
+		date = new JLabel("Date Updated:");
+		tempField = new JTextField();
+		dateField = new JTextField();
+		
 		//fit buttons and on the west section
 		westPan = new JPanel();
 		eastPan = new JPanel();
@@ -112,6 +134,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		centerPan = new JPanel();
 		
 		westPan.setLayout(new GridLayout(6, 1));
+		//southPan.setLayout(new GridLayout(2, 6));
 	}
 
 ////////////////////////////////////////////////////////////////////////////	
@@ -124,6 +147,37 @@ public class MainPanel extends JPanel implements ActionListener{
 		westPan.add(left);
 		westPan.add(breaks);
 		westPan.add(radioPanel);
+	}
+	
+///////////////////////////////////////////////////////////////////////////
+	
+	private void addComponentsSouth(){
+		Path path = Paths.get("DataFile.txt");
+		String data = readFile(path);
+		//System.out.println(data);
+		tempField.setText(data);//index where temps will be
+		dateField.setText(data);//where date will be
+		tempField.setSize(20, 20);
+		southPan.add(temp);
+		southPan.add(tempField);
+		southPan.add(date);
+		southPan.add(dateField);
+	}
+////////////////////////////////////////////////////////////////////////////
+	
+	private String readFile(Path path){
+		Charset charset = Charset.forName("US-ASCII");
+		String al = "";
+		try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
+			String s = null;
+			while ((s = reader.readLine()) != null) {
+				al = s;
+			}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return al;
 	}
 	
 ////////////////////////////////////////////////////////////////////////////	
@@ -144,8 +198,11 @@ public class MainPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		System.out.println(e.getActionCommand());
 		
 	}
 	
 }
+//to do
+//make gui update periodically

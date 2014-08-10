@@ -21,15 +21,13 @@ public class InputProtocol {
 	}
 	
 	public String writeData(String filePath){
-		String data = null;
+		String data = "";
 		Path p1 = Paths.get(filePath);
 		int counter = 0;
 		FileReader r = new FileReader();
 		tempList = r.read(p1);
 		while(counter < tempList.size()){
-			//System.out.println(tempList.get(counter));
-			data+=tempList.get(counter) + " ";
-			System.out.println(data);
+			data += tempList.get(counter) + " ";
 			counter++;
 		}
 		return data;
