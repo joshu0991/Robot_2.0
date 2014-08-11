@@ -25,6 +25,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private String temperature;
 	private MainPanel mp;
 	private JMenuItem closeComItem;
+	private Thread dataThread;
 	
 	public MainFrame(){
 		super("Robot");
@@ -76,7 +77,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		mp.low.setEnabled(true);
 		mp.stop.setEnabled(true);
 		temp = new ClientLogics(addr[0], addr[1], "Temp");
-		Thread dataThread = new Thread(temp);
+		dataThread = new Thread(temp);
 		dataThread.start();
 		}
 	}
