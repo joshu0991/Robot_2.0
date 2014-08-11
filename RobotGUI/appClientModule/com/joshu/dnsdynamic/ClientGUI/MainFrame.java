@@ -23,6 +23,8 @@ public class MainFrame extends JFrame implements ActionListener{
 	private ClientLogics temp;
 	private String [] addr;
 	private String temperature;
+	private MainPanel mp;
+	private JMenuItem closeComItem;
 	
 	public MainFrame(){
 		super("Robot");
@@ -33,12 +35,16 @@ public class MainFrame extends JFrame implements ActionListener{
 		menuBar = new JMenuBar();
 		connectMenu = new JMenu("Connect");
 		connectItem = new JMenuItem("New Connection", KeyEvent.VK_N);
+		closeComItem = new JMenuItem("Close", KeyEvent.VK_C);
 		connectItem.addActionListener(this);
+		closeComItem.addActionListener(this);
 		menuBar.add(connectMenu);
 		connectMenu.add(connectItem);
+		connectMenu.add(closeComItem);
 		setVisible(true);
 		setJMenuBar(menuBar);
-		add(new MainPanel());
+		mp = new MainPanel();
+		add(mp);
 	}
 	
 	public void buildAddr(String url){
@@ -60,9 +66,18 @@ public class MainFrame extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("New Connection")) {
 		String url = JOptionPane.showInputDialog(this, "Enter the the location", "example.location.com:9454");
 		buildAddr(url);
+		mp.forward.setEnabled(true);
+		mp.back.setEnabled(true);
+		mp.left.setEnabled(true);
+		mp.right.setEnabled(true);
+		mp.breaks.setEnabled(true);
+		mp.high.setEnabled(true);
+		mp.med.setEnabled(true);
+		mp.low.setEnabled(true);
+		mp.stop.setEnabled(true);
 		temp = new ClientLogics(addr[0], addr[1], "Temp");
-		Thread t = new Thread(temp);
-		t.start();
+		Thread dataThread = new Thread(temp);
+		dataThread.start();
 		}
 	}
 

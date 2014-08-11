@@ -22,20 +22,21 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.joshu.dnsdynamic.ClientGUI.Logic.*;
+import com.joshu.dnsdynamic.ClientGUI.Logic.*;
 
 public class MainPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton forward;
-	private JButton back;
-	private JButton left;
-	private JButton right;
-	private JButton breaks;
+	public JButton forward;
+	public JButton back;
+	public JButton left;
+	public JButton right;
+	public JButton breaks;
 ////////////////////////////////////////////////////////////////////////////
-	private JRadioButton high;
-	private JRadioButton med;
-	private JRadioButton low;
-	private JRadioButton stop;
+	public JRadioButton high;
+	public JRadioButton med;
+	public JRadioButton low;
+	public JRadioButton stop;
 ////////////////////////////////////////////////////////////////////////////
 	private JPanel westPan;
 	private JPanel eastPan;
@@ -52,8 +53,10 @@ public class MainPanel extends JPanel implements ActionListener{
 	private ImageIcon rightIm;
 	private JLabel temp;
 	private JLabel date;
+	private JLabel dis;
 	private JTextField tempField;
 	private JTextField dateField;
+	private JTextField distance;
 ////////////////////////////////////////////////////////////////////////////	
 	
 	public MainPanel()
@@ -65,7 +68,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		add(southPan, BorderLayout.SOUTH);
 		add(westPan, BorderLayout.WEST);
 	}
-
+	
 ////////////////////////////////////////////////////////////////////////////	
 	
 	private void createComponents(){
@@ -78,35 +81,44 @@ public class MainPanel extends JPanel implements ActionListener{
 		
 		//directional buttons
 		forward = new JButton("Forward", upIm);
+		forward.setEnabled(false);
 		forward.setIcon(upIm);
 		forward.setMnemonic(KeyEvent.VK_W);
 		forward.addActionListener(this);
 		
 		back = new JButton("Back", downIm);
+		back.setEnabled(false);
 		back.addActionListener(this);
 		back.setMnemonic(KeyEvent.VK_S);
 		
 		left = new JButton("Left", leftIm);
+		left.setEnabled(false);
 		left.addActionListener(this);
 		left.setMnemonic(KeyEvent.VK_A);
 		
 		right = new JButton("Right", rightIm);
+		right.setEnabled(false);
 		right.addActionListener(this);
 		right.setMnemonic(KeyEvent.VK_D);
 		
 		breaks = new JButton("Break");
+		breaks.setEnabled(false);
 		breaks.setMnemonic(KeyEvent.VK_E);
 		breaks.addActionListener(this);
 		
 		//radio speed buttons
 		speed = new JLabel("Speed");
 		high  = new JRadioButton("High");
+		high.setEnabled(false);
 		high.addActionListener(this);
 		med  = new JRadioButton("Med");
+		med.setEnabled(false);
 		med.addActionListener(this);
 		low  = new JRadioButton("Low");
+		low.setEnabled(false);
 		low.addActionListener(this);
 		stop = new JRadioButton("Stop");
+		stop.setEnabled(false);
 		stop.addActionListener(this);
 		group = new ButtonGroup();//group the radio buttons
 		group.add(high);
@@ -123,9 +135,10 @@ public class MainPanel extends JPanel implements ActionListener{
 		//Text fields
 		temp = new JLabel("Temperature:");
 		date = new JLabel("Date Updated:");
+		dis = new JLabel("Distance");
 		tempField = new JTextField();
 		dateField = new JTextField();
-		
+		distance = new JTextField();
 		//fit buttons and on the west section
 		westPan = new JPanel();
 		eastPan = new JPanel();
@@ -154,15 +167,17 @@ public class MainPanel extends JPanel implements ActionListener{
 	private void addComponentsSouth(){
 		Path path = Paths.get("DataFile.txt");
 		String data = readFile(path);
-		//System.out.println(data);
 		tempField.setText(data);//index where temps will be
 		dateField.setText(data);//where date will be
-		tempField.setSize(20, 20);
+		//tempField.setSize(30, 30);
 		southPan.add(temp);
 		southPan.add(tempField);
 		southPan.add(date);
 		southPan.add(dateField);
-	}
+		southPan.add(dis);
+		southPan.add(distance);
+		}
+	
 ////////////////////////////////////////////////////////////////////////////
 	
 	private String readFile(Path path){
@@ -198,11 +213,10 @@ public class MainPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
-		System.out.println(e.getActionCommand());
-		
+		if(e.getActionCommand() != null){
+			addComponentsSouth();
+		}
 	}
-	
 }
 //to do
 //make gui update periodically

@@ -11,9 +11,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import com.joshu.dnsdynamic.ClientGUI.*;
 
 public class ClientLogics implements Runnable{
-
+	
 	private String hostName;
 	private int portNum;
 	private Socket sock;
@@ -47,8 +48,10 @@ public class ClientLogics implements Runnable{
 			while((dataIn = in.readLine()) != null){
 				dataFile = new FileWriter("DataFile.txt", false);
 				System.out.println("Data In " + dataIn);
+				
 				dataFile.write(dataIn + counter);// write the data to a file so gui can access
 				counter++;
+				
 				dataFile.close();
 				if(dataIn == "Close"){
 					break;
