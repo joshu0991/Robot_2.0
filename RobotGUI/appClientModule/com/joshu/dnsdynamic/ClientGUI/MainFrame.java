@@ -67,6 +67,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("New Connection")) {
 		String url = JOptionPane.showInputDialog(this, "Enter the the location", "example.location.com:9454");
 		buildAddr(url);
+		
 		mp.forward.setEnabled(true);
 		mp.back.setEnabled(true);
 		mp.left.setEnabled(true);
@@ -76,6 +77,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		mp.med.setEnabled(true);
 		mp.low.setEnabled(true);
 		mp.stop.setEnabled(true);
+		
 		temp = new ClientLogics(addr[0], addr[1], "Temp");
 		dataThread = new Thread(temp);
 		dataThread.start();

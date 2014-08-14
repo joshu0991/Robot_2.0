@@ -11,7 +11,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -21,8 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.joshu.dnsdynamic.ClientGUI.Logic.*;
-import com.joshu.dnsdynamic.ClientGUI.Logic.*;
+import com.joshu.dnsdynamic.ClientGUI.Logic.ClientLogics;
 
 public class MainPanel extends JPanel implements ActionListener{
 
@@ -68,7 +66,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		add(southPan, BorderLayout.SOUTH);
 		add(westPan, BorderLayout.WEST);
 	}
-	
+
 ////////////////////////////////////////////////////////////////////////////	
 	
 	private void createComponents(){
@@ -164,12 +162,13 @@ public class MainPanel extends JPanel implements ActionListener{
 	
 ///////////////////////////////////////////////////////////////////////////
 	
-	private void addComponentsSouth(){
+	protected void addComponentsSouth(){
 		Path path = Paths.get("DataFile.txt");
 		String data = readFile(path);
+		if(data.length() > 0){
 		tempField.setText(data);//index where temps will be
 		dateField.setText(data);//where date will be
-		//tempField.setSize(30, 30);
+		}
 		southPan.add(temp);
 		southPan.add(tempField);
 		southPan.add(date);
@@ -180,7 +179,7 @@ public class MainPanel extends JPanel implements ActionListener{
 	
 ////////////////////////////////////////////////////////////////////////////
 	
-	private String readFile(Path path){
+	protected String readFile(Path path){
 		Charset charset = Charset.forName("US-ASCII");
 		String al = "";
 		try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
