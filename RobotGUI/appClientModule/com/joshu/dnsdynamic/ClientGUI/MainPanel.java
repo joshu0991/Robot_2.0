@@ -16,6 +16,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -49,13 +50,16 @@ public class MainPanel extends JPanel implements ActionListener{
 	private ImageIcon downIm;
 	private ImageIcon leftIm;
 	private ImageIcon rightIm;
-	private JLabel temp;
+	private JLabel tempLab;
 	private JLabel date;
 	private JLabel dis;
 	private JTextField tempField;
 	private JTextField dateField;
 	private JTextField distance;
 ////////////////////////////////////////////////////////////////////////////	
+	private String [] addr;
+	private ClientLogics temp;
+	private Thread dataThread;
 	
 	public MainPanel()
 	{
@@ -131,7 +135,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		radioPanel.add(stop);	
 		
 		//Text fields
-		temp = new JLabel("Temperature:");
+		tempLab = new JLabel("Temperature:");
 		date = new JLabel("Date Updated:");
 		dis = new JLabel("Distance");
 		tempField = new JTextField();
@@ -149,6 +153,34 @@ public class MainPanel extends JPanel implements ActionListener{
 	}
 
 ////////////////////////////////////////////////////////////////////////////	
+	
+	public void buildAddr(String url){
+		addr = new String[2];
+		int colenLoc = url.indexOf(':');
+		String port = url.substring(colenLoc + 1);
+		String ipAddr = url.substring(0, colenLoc);
+		addr[0] = ipAddr ;
+		addr[1] = port;
+	}
+	
+	public void connect(){
+		String url = JOptionPane.showInputDialog(this, "Enter the the location", "example.location.com:9454");
+		buildAddr(url);
+		
+		forward.setEnabled(true);
+		back.setEnabled(true);
+		left.setEnabled(true);
+		right.setEnabled(true);
+		breaks.setEnabled(true);
+		high.setEnabled(true);
+		med.setEnabled(true);
+		low.setEnabled(true);
+		stop.setEnabled(true);
+		
+		temp = new ClientLogics(addr[0], addr[1], "Temp");
+		dataThread = new Thread(temp);
+		dataThread.start();
+	}
 	
 	//add components to the westPanel
 	private void addComponentsWest(){
@@ -169,7 +201,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		tempField.setText(data);//index where temps will be
 		dateField.setText(data);//where date will be
 		}
-		southPan.add(temp);
+		southPan.add(tempLab);
 		southPan.add(tempField);
 		southPan.add(date);
 		southPan.add(dateField);

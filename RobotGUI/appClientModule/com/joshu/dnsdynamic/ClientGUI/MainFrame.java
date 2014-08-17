@@ -14,18 +14,16 @@ import com.joshu.dnsdynamic.ClientGUI.Logic.*;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
+	private boolean isConnected;
 	private static final long serialVersionUID = 1L;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 600;
 	private JMenuBar menuBar;
 	private JMenu connectMenu;
 	private JMenuItem connectItem;
-	private ClientLogics temp;
-	private String [] addr;
-	private String temperature;
+	private String temperature; 
 	private MainPanel mp;
 	private JMenuItem closeComItem;
-	private Thread dataThread;
 	
 	public MainFrame(){
 		super("Robot");
@@ -46,15 +44,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		setJMenuBar(menuBar);
 		mp = new MainPanel();
 		add(mp);
-	}
-	
-	public void buildAddr(String url){
-		addr = new String[2];
-		int colenLoc = url.indexOf(':');
-		String port = url.substring(colenLoc + 1);
-		String ipAddr = url.substring(0, colenLoc);
-		addr[0] = ipAddr ;
-		addr[1] = port;
+		isConnected = false;
 	}
 	
 	public String getTemperature(){
@@ -64,23 +54,8 @@ public class MainFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getActionCommand().equals("New Connection")) {
-		String url = JOptionPane.showInputDialog(this, "Enter the the location", "example.location.com:9454");
-		buildAddr(url);
-		
-		mp.forward.setEnabled(true);
-		mp.back.setEnabled(true);
-		mp.left.setEnabled(true);
-		mp.right.setEnabled(true);
-		mp.breaks.setEnabled(true);
-		mp.high.setEnabled(true);
-		mp.med.setEnabled(true);
-		mp.low.setEnabled(true);
-		mp.stop.setEnabled(true);
-		
-		temp = new ClientLogics(addr[0], addr[1], "Temp");
-		dataThread = new Thread(temp);
-		dataThread.start();
+		if(e.getActionCommand().equals("New Connection") && isConnected == false) {
+		mp.connect();
 		}
 	}
 
