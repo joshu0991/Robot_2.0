@@ -17,32 +17,26 @@ public class RobotServer {
 	private InputProtocol iProt;
 	private String dataOut, dataIn;
 
-	RobotServer() {
+	{
 		try {
 			serverSocket = new ServerSocket(portNum);
 			clientSocket = serverSocket.accept();
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					clientSocket.getInputStream()));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	RobotServer() {
+
+	}
 
 	RobotServer(int portNum) {
 		this.portNum = portNum;
-		try {
-			serverSocket = new ServerSocket(portNum);
-			clientSocket = serverSocket.accept();
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(
-					clientSocket.getInputStream()));
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void initComm() {
