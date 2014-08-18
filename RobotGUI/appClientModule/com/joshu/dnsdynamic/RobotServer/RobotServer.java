@@ -32,7 +32,7 @@ public class RobotServer {
 	}
 	
 	RobotServer() {
-
+		System.out.println("Server started");
 	}
 
 	RobotServer(int portNum) {
