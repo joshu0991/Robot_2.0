@@ -16,6 +16,8 @@ public class InputProtocol {
 			outPut = "Hello";
 		}else if(input.equals("Temp")){
 			outPut = writeData("/Temps.txt");
+		}else if(input.equals("forward")){
+			
 		}
 		return outPut;
 	}

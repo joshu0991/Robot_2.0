@@ -26,16 +26,16 @@ import com.joshu.dnsdynamic.ClientGUI.Logic.ClientLogics;
 public class MainPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public JButton forward;
-	public JButton back;
-	public JButton left;
-	public JButton right;
-	public JButton breaks;
+	private JButton forward;
+	private JButton back;
+	private JButton left;
+	private JButton right;
+	private JButton breaks;
 ////////////////////////////////////////////////////////////////////////////
-	public JRadioButton high;
-	public JRadioButton med;
-	public JRadioButton low;
-	public JRadioButton stop;
+	private JRadioButton high;
+	private JRadioButton med;
+	private JRadioButton low;
+	private JRadioButton stop;
 ////////////////////////////////////////////////////////////////////////////
 	private JPanel westPan;
 	private JPanel eastPan;
@@ -254,4 +254,3 @@ public class MainPanel extends JPanel implements ActionListener{
 	}
 }
 //to do
-//make gui update periodically
