@@ -239,6 +239,10 @@ public class MainPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	public void close(){
+		temp.makeRequest("Close");
+	}
+	
 //////////////////////////////////////////////////////////////////////////////	
 	
 	@Override
@@ -252,8 +256,9 @@ public class MainPanel extends JPanel implements ActionListener{
 				//request move forward
 				temp.makeRequest("forward");
 				//request update distance
-				
+				temp.makeRequest("distance");
 			}
+			
 		}
 	}
 }

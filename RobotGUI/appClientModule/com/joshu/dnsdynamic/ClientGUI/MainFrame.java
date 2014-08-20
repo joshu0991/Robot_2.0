@@ -55,8 +55,13 @@ public class MainFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getActionCommand().equals("New Connection") && isConnected == false) {
-		mp.connect();
+			mp.connect();
+			isConnected = true;
+		}else if(e.getActionCommand().equals("Close") && isConnected == true){
+			mp.close();
+			isConnected = false;
 		}
+		
 	}
 
 }
