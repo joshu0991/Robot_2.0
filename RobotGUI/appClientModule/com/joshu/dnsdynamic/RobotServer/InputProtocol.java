@@ -18,6 +18,8 @@ public class InputProtocol {
 			outPut = writeData("/Temps.txt");
 		}else if(input.equals("forward")){
 			//write forward plus speed to the text file for reading from the daemon
+		}else if(input.equals("distance")){
+			//send ping
 		}
 		return outPut;
 	}
