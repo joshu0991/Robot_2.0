@@ -17,7 +17,7 @@ public class InputProtocol {
 		}else if(input.equals("Temp")){
 			outPut = writeData("/Temps.txt");
 		}else if(input.equals("forward")){
-			
+			//write forward plus speed to the text file for reading from the daemon
 		}
 		return outPut;
 	}

@@ -247,8 +247,12 @@ public class MainPanel extends JPanel implements ActionListener{
 		if(e.getActionCommand() != null){
 			addComponentsSouth();
 			if(e.getActionCommand().equals("forward")){
-				//request update distance
+				//update temp
+				temp.makeRequest("temp");
 				//request move forward
+				temp.makeRequest("forward");
+				//request update distance
+				
 			}
 		}
 	}

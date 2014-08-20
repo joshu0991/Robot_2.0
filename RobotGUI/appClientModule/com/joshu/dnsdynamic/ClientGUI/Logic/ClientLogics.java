@@ -42,7 +42,11 @@ public class ClientLogics extends MainPanel implements Runnable{
 		
 	}
 	
-	public void mainLoop(String request){
+	public void makeRequest(String request){
+		this.request = request;
+	}
+	
+	public void mainLoop(){
 		try {
 			int counter = 0;
 			while((dataIn = in.readLine()) != null){
@@ -78,6 +82,6 @@ public class ClientLogics extends MainPanel implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		mainLoop(request);//start a new thread based on wht the user instantiates this obj with
+		mainLoop();//start a new thread based on wht the user instantiates this obj with
 	}
 }
