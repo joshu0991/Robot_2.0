@@ -11,7 +11,7 @@ public class InputProtocol {
 	public String processInput(String input){
 		String outPut = null;
 		if(input == "Close"){
-			outPut = "Good-Bye!";
+			outPut = "Close";
 		}else if(input == null){
 			outPut = "Hello";
 		}else if(input.equals("Temp")){

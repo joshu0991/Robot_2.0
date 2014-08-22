@@ -250,13 +250,16 @@ public class MainPanel extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getActionCommand() != null){
 			addComponentsSouth();
-			if(e.getActionCommand().equals("forward")){
+			if(e.getActionCommand().equals("Forward")){
 				//update temp
 				temp.makeRequest("temp");
 				//request move forward
 				temp.makeRequest("forward");
 				//request update distance
 				temp.makeRequest("distance");
+				System.out.println(e.getActionCommand());
+			}else if(e.getActionCommand().equals("")){
+				
 			}
 			
 		}
