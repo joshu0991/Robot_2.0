@@ -258,8 +258,30 @@ public class MainPanel extends JPanel implements ActionListener{
 				//request update distance
 				temp.makeRequest("distance");
 				System.out.println(e.getActionCommand());
-			}else if(e.getActionCommand().equals("")){
-				
+			}else if(e.getActionCommand().equals("back")){
+				//update temp
+				temp.makeRequest("temp");
+				//request move forward
+				temp.makeRequest("back");
+				//request update distance
+				temp.makeRequest("distance");
+				System.out.println(e.getActionCommand());
+			}else if(e.getActionCommand().equals(left)){
+				//update temp
+				temp.makeRequest("temp");
+				//request move forward
+				temp.makeRequest("left");
+				//request update distance
+				temp.makeRequest("distance");
+				System.out.println(e.getActionCommand());
+			}else if(e.getActionCommand().equals(right)){
+				//update temp
+				temp.makeRequest("temp");
+				//request move forward
+				temp.makeRequest("right");
+				//request update distance
+				temp.makeRequest("distance");
+				System.out.println(e.getActionCommand());
 			}
 			
 		}

@@ -20,6 +20,12 @@ public class InputProtocol {
 			//write forward plus speed to the text file for reading from the daemon
 		}else if(input.equals("distance")){
 			//send ping
+		}else if(input.equals("back")){
+			//write back to file
+		}else if(input.equals("left")){
+			//write left to file
+		}else if(input.equals("right")){
+			//write right to file
 		}
 		return outPut;
 	}
