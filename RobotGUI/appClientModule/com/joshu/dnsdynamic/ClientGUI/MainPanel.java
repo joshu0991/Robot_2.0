@@ -139,6 +139,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		date = new JLabel("Date Updated:");
 		dis = new JLabel("Distance");
 		tempField = new JTextField();
+		tempField.setSize(100, 30);
 		dateField = new JTextField();
 		distance = new JTextField();
 		//fit buttons and on the west section
@@ -198,8 +199,10 @@ public class MainPanel extends JPanel implements ActionListener{
 		Path path = Paths.get("DataFile.txt");
 		String data = readFile(path);
 		if(data.length() > 0){
+		tempField.setSize(100, 30);
 		tempField.setText(data);//index where temps will be
 		dateField.setText(data);//where date will be
+		dateField.setSize(100, 30);
 		}
 		southPan.add(tempLab);
 		southPan.add(tempField);
@@ -251,40 +254,27 @@ public class MainPanel extends JPanel implements ActionListener{
 		if(e.getActionCommand() != null){
 			addComponentsSouth();
 			if(e.getActionCommand().equals("Forward")){
-				//update temp
-				temp.makeRequest("temp");
 				//request move forward
 				temp.makeRequest("forward");
-				//request update distance
-				temp.makeRequest("distance");
 				System.out.println(e.getActionCommand());
-			}else if(e.getActionCommand().equals("back")){
-				//update temp
-				temp.makeRequest("temp");
-				//request move forward
+			}else if(e.getActionCommand().equals("Back")){
+				//request move back
 				temp.makeRequest("back");
-				//request update distance
-				temp.makeRequest("distance");
 				System.out.println(e.getActionCommand());
-			}else if(e.getActionCommand().equals(left)){
-				//update temp
-				temp.makeRequest("temp");
-				//request move forward
+			}else if(e.getActionCommand().equals("Left")){
+				//request move left
 				temp.makeRequest("left");
-				//request update distance
-				temp.makeRequest("distance");
 				System.out.println(e.getActionCommand());
-			}else if(e.getActionCommand().equals(right)){
-				//update temp
-				temp.makeRequest("temp");
+			}else if(e.getActionCommand().equals("Right")){
 				//request move forward
 				temp.makeRequest("right");
-				//request update distance
-				temp.makeRequest("distance");
 				System.out.println(e.getActionCommand());
 			}
-			
+		//always update temp and distance
+		temp.makeRequest("Temp");
+		temp.makeRequest("distance");
 		}
 	}
 }
 //to do
+//make texts fields size appropriatly
