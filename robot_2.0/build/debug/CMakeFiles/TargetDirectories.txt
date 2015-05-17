@@ -1,0 +1,2 @@
+/home/pi/robot_2.0/build/debug/robot/CMakeFiles/robot.dir
+/home/pi/robot_2.0/build/debug/gpioaccess/CMakeFiles/GPIOPin.dir
