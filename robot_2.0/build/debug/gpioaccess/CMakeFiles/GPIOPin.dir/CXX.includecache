@@ -415,7 +415,11 @@ GPIOPin.hpp
 /home/pi/robot_2.0/trunk/gpioaccess/GPIOPin.hpp
 
 /home/pi/robot_2.0/trunk/gpioaccess/GPIOPin.hpp
+fstream
+-
 iostream
+-
+string
 -
 boost/cstdint.hpp
 -

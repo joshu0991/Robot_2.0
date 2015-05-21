@@ -13,15 +13,33 @@ GPIOPin::~GPIOPin()
 	
 }	
 
+//! Export a gpio pin to be used.
 bool GPIOPin::exportPin()
 {
-	std::string pathToExport = "/sys/class/gpio/export";
-    ofstream stream(pathToExport.c_str());
-    if(stream = -1)
+    std::string pathToExport = "/sys/class/gpio/export";
+    //has to be a c string to write to file sys.
+    std::ofstream stream(pathToExport.c_str());
+    if(stream < 0)
     {
-		std::cout << "Failed to export pin" << std::endl;
-		return false;
-	}
+        std::cout << "Failed to export pin" << std::endl;
+        return false;
+    }
+    stream << m_gpioPin;
+    stream.close();
+    return true;
+}
+
+//! Unexport a gpio pin.
+bool GPIOPin::unexportPin()
+{
+    std::string pathToUnexport = "/sys/class/gpio/unexport";
+    //has to be a c string to write to file sys.
+    std::ofstream stream(pathToUnexport.c_str());
+        if(stream < 0)
+    {
+        std::cout << "Failed to unexport pin" << std::endl;
+        return false;
+    }
     stream << m_gpioPin;
     stream.close();
     return true;
