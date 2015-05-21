@@ -1,7 +1,9 @@
 #ifndef GPIOPIN_HPP
 #define GPIOPIN_HPP
 
+#include <fstream>
 #include <iostream>
+#include <string>
 
 #include <boost/cstdint.hpp>
 

@@ -12,3 +12,17 @@ GPIOPin::~GPIOPin()
 {
 	
 }	
+
+bool GPIOPin::exportPin()
+{
+	std::string pathToExport = "/sys/class/gpio/export";
+    ofstream stream(pathToExport.c_str());
+    if(stream = -1)
+    {
+		std::cout << "Failed to export pin" << std::endl;
+		return false;
+	}
+    stream << m_gpioPin;
+    stream.close();
+    return true;
+}
