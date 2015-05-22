@@ -1,16 +1,27 @@
 #include "GPIOPin.hpp"
 
-GPIOPin::GPIOPin(boost::uint8_t p_pinNum) : 
+#include <boost/lexical_cast.hpp>
+
+GPIOPin::GPIOPin(boost::uint8_t p_pinNum, std::string p_direction) : 
     m_gpioPin(p_pinNum)
 
 {
+	bool exported = exportPin();
+	if(!exported)
+	{
+		std::cerr << "Could not set the pin" << std::endl;
+	}
+	else
+	{
+		setUpPinDirection(p_direction);
+	}
     std::cout << m_gpioPin << std::endl;
 }
 
 //! **Virtual** Need to unexport the pins that are in use. 
 GPIOPin::~GPIOPin()
 {
-	
+	unexportPin();
 }	
 
 //! Export a gpio pin to be used.
@@ -43,4 +54,13 @@ bool GPIOPin::unexportPin()
     stream << m_gpioPin;
     stream.close();
     return true;
+}
+
+//! Set up an input pin
+void GPIOPin::setUpPinDirection(std::string dir)
+{
+	std::string location = "/sys/class/gpio/gpio" + boost::lexical_cast<std::string>(m_gpioPin) + "direction";
+	std::ofstream stream (location.c_str());
+	stream << dir;
+	stream.close();
 }

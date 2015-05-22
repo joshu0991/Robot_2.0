@@ -1,1 +1,0 @@
-/usr/bin/c++   -g -Wall   CMakeFiles/robot.dir/robot.cpp.o  -o robot  -L/home/pi/boost_1_58_0/stage/lib -rdynamic 

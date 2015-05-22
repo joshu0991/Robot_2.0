@@ -1,2 +1,0 @@
-/usr/bin/ar cq libGPIOPin.a  CMakeFiles/GPIOPin.dir/GPIOPin.cpp.o
-/usr/bin/ranlib libGPIOPin.a
