@@ -23,7 +23,8 @@ public:
     bool checkForPin(boost::uint8_t	p_pinNumber);
     
     //! Get a refernce to the pin for reading or writing.
-    
+    boost::intrusive_ptr<GPIOPin> getPin(boost::uint8_t p_pinNumber);
+
 private:
     //! Only want one of these so we can determine which pins are in use and check for conflicts.
     static boost::unordered_set<boost::intrusive_ptr<GPIOPin> > pinsInUse;
