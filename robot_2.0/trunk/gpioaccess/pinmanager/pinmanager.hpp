@@ -2,7 +2,7 @@
 #include "gpioaccess/gpiopin.hpp"
 
 #include <boost/intrusive_ptr.hpp>
-#include <boost/unordered_set.hpp>
+#include <boost/unordered_map.hpp>
 
 /*!
  * \brief class for managing all of the pins in use in the robot applocation is also responsable for cleanup.
@@ -24,8 +24,12 @@ public:
     
     //! Get a refernce to the pin for reading or writing.
     boost::intrusive_ptr<GPIOPin> getPin(boost::uint8_t p_pinNumber);
+    
+private:
+    //! insert a pin.
+    void insertPin(boost::uint8_t);
 
 private:
     //! Only want one of these so we can determine which pins are in use and check for conflicts.
-    static boost::unordered_set<boost::intrusive_ptr<GPIOPin> > pinsInUse;
+    static boost::unordered_map<boost::uint8_t, boost::intrusive_ptr<GPIOPin> > m_pinsInUse;
 };
