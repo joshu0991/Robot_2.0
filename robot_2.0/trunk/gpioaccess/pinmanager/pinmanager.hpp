@@ -12,7 +12,7 @@
  */
 class PinManager : public GPIOPin
 {
-public:
+protected:
     //! Add a pin to the set.
     bool addPin(boost::uint8_t p_pinNumber);
     
