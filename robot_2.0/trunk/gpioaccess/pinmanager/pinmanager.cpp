@@ -1,5 +1,9 @@
 #include "pinmanager.hpp"
 
+PinManager::~PinManager()
+{
+}
+
 bool PinManager::addPin(boost::uint8_t p_pinNumber)
 {
 	boost::unordered_map<boost::uint8_t, boost::intrusive_ptr<GPIOPin> >::const_iterator it = m_pinsInUse.find(p_pinNumber);

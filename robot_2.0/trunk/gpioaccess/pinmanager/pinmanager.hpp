@@ -25,6 +25,8 @@ protected:
     //! Get a refernce to the pin for reading or writing.
     boost::intrusive_ptr<GPIOPin> getPin(boost::uint8_t p_pinNumber);
     
+    virtual ~PinManager();
+    
 private:
     //! insert a pin.
     void insertPin(boost::uint8_t);
