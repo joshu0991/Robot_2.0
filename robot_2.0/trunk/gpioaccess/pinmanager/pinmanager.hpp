@@ -14,7 +14,7 @@ class PinManager : public GPIOPin
 {
 protected:
     //! Add a pin to the set.
-    bool addPin(boost::uint8_t p_pinNumber);
+    bool addPin(const boost::uint8_t p_pinNumber, const std::string p_mode);
     
     //! Remove a pin from the set.
     bool removePin(boost::uint8_t p_pinNumber);
@@ -29,9 +29,9 @@ protected:
     
 private:
     //! insert a pin.
-    void insertPin(boost::uint8_t);
+    bool insertPin(const boost::uint8_t, const std::string p_mode);
 
 private:
     //! Only want one of these so we can determine which pins are in use and check for conflicts.
-    static boost::unordered_map<boost::uint8_t, boost::intrusive_ptr<GPIOPin> > m_pinsInUse;
+    static const boost::unordered_map<boost::uint8_t, boost::intrusive_ptr<GPIOPin> > m_pinsInUse;
 };

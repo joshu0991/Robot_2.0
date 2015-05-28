@@ -1,9 +1,10 @@
-#include "GPIOPin.hpp"
+#include "gpiopin.hpp"
 
 #include <boost/lexical_cast.hpp>
 
-GPIOPin::GPIOPin(boost::uint8_t p_pinNum, std::string p_direction) : 
-    m_gpioPin(p_pinNum)
+GPIOPin::GPIOPin(boost::uint8_t p_pinNum, const std::string& p_direction) : 
+    m_gpioPin(p_pinNum),
+    m_mode(p_direction)
 
 {
 	bool exported = exportPin();
@@ -57,7 +58,7 @@ bool GPIOPin::unexportPin()
 }
 
 //! Set up an input pin
-void GPIOPin::setUpPinDirection(std::string dir)
+void GPIOPin::setUpPinDirection(const std::string& dir)
 {
 	std::string location = "/sys/class/gpio/gpio" + boost::lexical_cast<std::string>(m_gpioPin) + "direction";
 	std::ofstream stream (location.c_str());

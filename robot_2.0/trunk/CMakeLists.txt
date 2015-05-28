@@ -5,7 +5,7 @@ project(robot)
 set(Boost_INCLUDE_DIR /home/pi/boost_1_58_0)
 set(Boost_LIBRARY_DIR /home/pi/boost_1_58_0/stage/lib)
 
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gpioaccess)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${Boost_INCLUDE_DIR} )
 link_directories( ${Boost_LIBRARY_DIR} )

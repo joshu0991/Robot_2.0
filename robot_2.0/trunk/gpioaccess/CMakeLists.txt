@@ -1,3 +1,6 @@
 add_subdirectory(pinmanager)
 
-add_library(GPIOPin ${CMAKE_CURRENT_SOURCE_DIR}/GPIOPin.cpp ${CMAKE_CURRENT_SOURCE_DIR}/GPIOPin.cpp)
+include_directories(${ROBOT_SOURCE_DIRECTORY})
+
+add_library(gpiopin ${CMAKE_CURRENT_SOURCE_DIR}/gpiopin.hpp ${CMAKE_CURRENT_SOURCE_DIR}/gpiopin.cpp)
+target_link_libraries(pinmanager)
