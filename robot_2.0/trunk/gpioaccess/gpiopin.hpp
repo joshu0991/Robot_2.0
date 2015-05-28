@@ -36,7 +36,7 @@ private:
     boost::uint8_t m_gpioPin;
     
     //! Wheather this pin is set up to read or write.
-    std::string m_mode;
+    const std::string& m_mode;
 };
 
 #endif // GPIOPIN_HPP

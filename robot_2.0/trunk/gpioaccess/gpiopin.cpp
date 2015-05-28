@@ -28,7 +28,7 @@ GPIOPin::~GPIOPin()
 //! Export a gpio pin to be used.
 bool GPIOPin::exportPin()
 {
-    std::string pathToExport = "/sys/class/gpio/export";
+    const std::string pathToExport = "/sys/class/gpio/export";
     //has to be a c string to write to file sys.
     std::ofstream stream(pathToExport.c_str());
     if(stream < 0)
@@ -44,7 +44,7 @@ bool GPIOPin::exportPin()
 //! Unexport a gpio pin.
 bool GPIOPin::unexportPin()
 {
-    std::string pathToUnexport = "/sys/class/gpio/unexport";
+    const std::string pathToUnexport = "/sys/class/gpio/unexport";
     //has to be a c string to write to file sys.
     std::ofstream stream(pathToUnexport.c_str());
         if(stream < 0)
@@ -60,7 +60,7 @@ bool GPIOPin::unexportPin()
 //! Set up an input pin
 void GPIOPin::setUpPinDirection(const std::string& dir)
 {
-	std::string location = "/sys/class/gpio/gpio" + boost::lexical_cast<std::string>(m_gpioPin) + "direction";
+	const std::string location = "/sys/class/gpio/gpio/" + boost::lexical_cast<std::string>(static_cast<int>(m_gpioPin)) + "/direction";
 	std::ofstream stream (location.c_str());
 	stream << dir;
 	stream.close();
