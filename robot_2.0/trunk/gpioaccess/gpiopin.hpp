@@ -12,12 +12,12 @@
  */
 class GPIOPin
 {
-protected:
+public:
     /*!
      * \param[in] p_pinNum the pin to manager.
      * \param[in] p_direction input or output pin can be in or out.
      */
-    GPIOPin(boost::uint8_t p_pinNum, const std::string& p_direction);
+    GPIOPin(std::string p_pinNum, const std::string& p_direction);
 
     virtual ~GPIOPin();
 
@@ -33,7 +33,7 @@ private:
     
 private:
     //! The pin this class will be managing.
-    boost::uint8_t m_gpioPin;
+    std::string m_gpioPin;
     
     //! Wheather this pin is set up to read or write.
     const std::string& m_mode;
