@@ -2,7 +2,7 @@
 
 #include <boost/lexical_cast.hpp>
 
-GPIOPin::GPIOPin(std::string p_pinNum, const std::string& p_direction) : 
+GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) : 
     m_gpioPin(p_pinNum),
     m_mode(p_direction)
 
