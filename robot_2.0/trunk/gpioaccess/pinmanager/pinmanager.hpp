@@ -22,10 +22,10 @@ protected:
     bool removePin(const std::string& p_pinNumber);
     
     //! check if a pin is in use.
-    bool checkForPin(boost::uint8_t	p_pinNumber);
+    bool checkForPin(const std::string&	p_pinNumber);
     
     //! Get a refernce to the pin for reading or writing.
-    boost::shared_ptr<GPIOPin> getPin(boost::uint8_t p_pinNumber);
+    boost::shared_ptr<GPIOPin> getPin(const std::string& p_pinNumber);
     
     virtual ~PinManager();
     
