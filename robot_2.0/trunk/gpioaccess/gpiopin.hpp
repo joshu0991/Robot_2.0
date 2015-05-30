@@ -5,8 +5,6 @@
 #include <iostream>
 #include <string>
 
-#include <boost/cstdint.hpp>
-
 /*!
  * \brief Class to manager an individual pin.
  */
@@ -19,7 +17,7 @@ public:
      */
     GPIOPin(const std::string& p_pinNum, const std::string& p_direction);
 
-    virtual ~GPIOPin();
+    ~GPIOPin();
 
     std::string getMode()
     {
