@@ -15,6 +15,9 @@
 class PinManager
 {
 protected:
+    //! Default constructor
+    PinManager();
+
     //! Add a pin to the set.
     bool addPin(const std::string&, const std::string& p_mode);
     

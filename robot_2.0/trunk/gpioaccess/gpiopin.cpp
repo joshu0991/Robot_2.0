@@ -1,5 +1,6 @@
 #include "gpiopin.hpp"
 
+//! Direction can be "in" or "out"
 GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) : 
     m_gpioPin(p_pinNum),
     m_mode(p_direction)

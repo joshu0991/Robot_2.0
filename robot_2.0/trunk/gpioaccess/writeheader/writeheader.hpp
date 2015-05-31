@@ -1,22 +1,35 @@
 #include "gpioaccess/pinmanager/pinmanager.hpp"
 
-#include <boost/numeric/ublas/vector.hpp>
+#include <boost/cstdint.hpp>
+
+#include <vector>
+
 /*!
  * \brief class that specifies how writing should be done to a gpio pin
  *   this class creates and manages the pins and ensures they are set up appropriately.
- *   to write to a pin a client moduel should make this make a write header object and call write.
- *   This class initializes all of the pins given to write and checks to make sure they aren't in use.
+ *   to write to a pin a client moduel should inherit from this class implement how writing should be done and call doWrite.
+ *   which in turn will call that write function. This class initializes all of the pins given to write and checks to make sure they aren't in use.
  */ 
 class WriteHeader : PinManager
 {
+	
 public:
     //! \param[in] vector containing a list of the pins that the user of this class needs to write to.
-    WriteHeader(boost::numeric::ublas::vector<const std::string&> p_pinList);
+    WriteHeader(std::vector<std::string>& p_pinList);
 
-    //! Ensures pin is set up and in the correct direction. gets a pointer to the pin from the map in pin manager and writes the value.
+    //! calls the write function appropratly that is implemented by the user of this class.
+    virtual void doWrite(const std::string& p_pinNumber);
+    
+    //! this gets
     virtual bool write(const std::string& p_pinNumber, const std::string& p_state) = 0;
+    
+    //! Does nothing.
+    virtual ~WriteHeader()
+    {
+	}
+
+private:
+    //! Set up all of the pins
+    bool initilize(std::vector<std::string>& p_pinList);
 	
-private: 
-    //! handle the set up of the pin.
-    void checkForPin(const std::string& p_pinNumber);
 };

@@ -1,5 +1,9 @@
 #include "pinmanager.hpp"
 
+PinManager::PinManager()
+{
+}
+
 PinManager::~PinManager()
 {
 }
