@@ -23,6 +23,10 @@ public:
     {
 		return m_mode;
 	}
+    //! default write to a pin
+    void write(const std::string& p_state);
+    //! default read from a pin
+    void read(std::string& p_return);
 private:
     //! Functions needed for set up.
     void setUpPinDirection(const std::string& p_direction);

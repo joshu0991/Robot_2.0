@@ -20,4 +20,14 @@ bool WriteHeader::initilize(std::vector<std::string>& p_pinList)
 	}
 	return true;
 }
+
+void WriteHeader::doWrite(const std::string& p_pinNumber, std::string& p_state)
+{
+	boost::shared_ptr<GPIOPin> pin = getPin(p_pinNumber);
+	if(pin)
+	{
+		pin->write(p_state);
+	}
+}
+
 	

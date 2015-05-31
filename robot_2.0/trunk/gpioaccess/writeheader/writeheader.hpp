@@ -18,10 +18,7 @@ public:
     WriteHeader(std::vector<std::string>& p_pinList);
 
     //! calls the write function appropratly that is implemented by the user of this class.
-    virtual void doWrite(const std::string& p_pinNumber);
-    
-    //! this gets
-    virtual bool write(const std::string& p_pinNumber, const std::string& p_state) = 0;
+    virtual void doWrite(const std::string& p_pinNumber, std::string& p_state);
     
     //! Does nothing.
     virtual ~WriteHeader()

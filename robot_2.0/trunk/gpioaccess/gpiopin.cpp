@@ -1,5 +1,5 @@
 #include "gpiopin.hpp"
-
+#include <string>
 //! Direction can be "in" or "out"
 GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) : 
     m_gpioPin(p_pinNum),
@@ -63,4 +63,49 @@ void GPIOPin::setUpPinDirection(const std::string& dir)
 	std::ofstream stream (location.c_str());
 	stream << dir;
 	stream.close();
+}
+
+void GPIOPin::write(const std::string& p_state)
+{
+	std::string path = "/sys/class/gpio/gpio" + m_gpioPin;
+	if(m_mode == "out")
+	{
+		std::ofstream stream (path.c_str());
+		if(stream < 0)
+		{
+		    std::cout << "Failed to write" << std::endl;
+		}
+		else
+		{
+     		stream << p_state;
+     		stream.close();
+		}
+	}
+}
+
+void GPIOPin::read(std::string& p_return)
+{
+    std::string path = "/sys/class/gpio/gpio" + m_gpioPin;
+	if(m_mode == "in")
+	{
+		std::ifstream stream (path.c_str());
+		if(stream < 0)
+		{
+			std::cout << "Failed to read" << std::endl;
+		}
+		else
+		{
+     		stream >> p_return;
+     		stream.close();
+     		if(p_return != "0")
+     		{
+				 p_return = "1";
+			}
+			else
+			{
+				p_return = "0";
+			}
+		}
+	}
+			
 }
