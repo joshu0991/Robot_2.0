@@ -62,3 +62,15 @@ bool PinManager::checkForPin(const std::string& p_pinNumber)
 	}
 }
 
+boost::shared_ptr<GPIOPin> PinManager::getPin(const std::string& p_pinNumber)
+{
+	boost::unordered_map<std::string, boost::shared_ptr<GPIOPin> >::const_iterator it = m_pinsInUse.find(p_pinNumber);
+	if (it == m_pinsInUse.end())
+	{
+		return boost::shared_ptr<GPIOPin>();
+	}
+	else
+	{
+		return it->second;
+	}
+}
