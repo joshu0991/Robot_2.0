@@ -38,6 +38,6 @@ private:
 
 private:
     //! Only want one of these so we can determine which pins are in use and check for conflicts.
-    static boost::unordered_map<std::string, boost::shared_ptr<GPIOPin> > m_pinsInUse;
+    boost::unordered_map<std::string, boost::shared_ptr<GPIOPin> > m_pinsInUse;
 };
 #endif
