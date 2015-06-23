@@ -23,10 +23,13 @@ public:
     {
 		return m_mode;
 	}
+
     //! default write to a pin
     void write(const std::string& p_state);
+
     //! default read from a pin
     void read(std::string& p_return);
+
 private:
     //! Functions needed for set up.
     void setUpPinDirection(const std::string& p_direction);
@@ -38,7 +41,7 @@ private:
     const std::string& m_gpioPin;
     
     //! Wheather this pin is set up to read or write.
-    const std::string& m_mode;
+    const std::string m_mode;
 };
 
 #endif // GPIOPIN_HPP

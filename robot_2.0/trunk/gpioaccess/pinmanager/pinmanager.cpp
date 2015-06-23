@@ -1,10 +1,5 @@
 #include "pinmanager.hpp"
 
-//namespace
-//{
-//    boost::unordered_map<std::string, boost::shared_ptr<GPIOPin> > m_pinsInUse;
-//}
-
 PinManager::PinManager() :
     m_pinsInUse()
 {

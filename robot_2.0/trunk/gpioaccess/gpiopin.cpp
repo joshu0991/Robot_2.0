@@ -15,7 +15,6 @@ GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) :
 	{
 		setUpPinDirection(p_direction);
 	}
-    std::cout << m_gpioPin << std::endl;
 }
 
 //! **Virtual** Need to unexport the pins that are in use. 
@@ -59,7 +58,7 @@ bool GPIOPin::unexportPin()
 //! Set up an input pin
 void GPIOPin::setUpPinDirection(const std::string& dir)
 {
-	const std::string location = "/sys/class/gpio/gpio/" + m_gpioPin + "/direction";
+	const std::string location = "/sys/class/gpio/gpio" + m_gpioPin + "/direction";
 	std::ofstream stream (location.c_str());
 	stream << dir;
 	stream.close();
@@ -67,7 +66,7 @@ void GPIOPin::setUpPinDirection(const std::string& dir)
 
 void GPIOPin::write(const std::string& p_state)
 {
-	std::string path = "/sys/class/gpio/gpio" + m_gpioPin;
+	std::string path = "/sys/class/gpio/gpio" + m_gpioPin + "/value";
 	if(m_mode == "out")
 	{
 		std::ofstream stream (path.c_str());
@@ -85,7 +84,8 @@ void GPIOPin::write(const std::string& p_state)
 
 void GPIOPin::read(std::string& p_return)
 {
-    std::string path = "/sys/class/gpio/gpio" + m_gpioPin;
+    std::string path = "/sys/class/gpio/gpio" + m_gpioPin +"/value";
+
 	if(m_mode == "in")
 	{
 		std::ifstream stream (path.c_str());
