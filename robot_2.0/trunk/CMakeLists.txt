@@ -12,5 +12,6 @@ link_directories( ${Boost_LIBRARY_DIR} )
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
+add_subdirectory(components)
 add_subdirectory(gpioaccess)
 add_subdirectory(robot)
