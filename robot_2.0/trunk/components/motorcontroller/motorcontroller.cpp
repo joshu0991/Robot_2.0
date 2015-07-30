@@ -1,13 +1,25 @@
 #include "motorcontroller.hpp"
 
-MotorController::MotorController(std::string p_gpioPins[2]) :
+MotorController::MotorController(boost::shared_ptr<WriteHeader> p_header, std::string& p_leftPin, std::string& p_rightPin) :
     m_leftMotorState(false),
     m_rightMotorState(false),
-    m_header(p_gpioPins),
-    m_gpioPins()
+    m_header(p_header),
+    m_leftPin(p_leftPin),
+    m_rightPin(p_rightPin),
+    m_movementThread()
 {
-    memcpy(m_gpioPins, p_gpioPins, 2 * sizeof(p_gpioPins));
-    std::cout << "array values " << m_gpioPins[0] << " " << m_gpioPins[1] << std::endl;
+}
+
+MotorController::~MotorController()
+{
+}
+
+void MotorController::controller(const std::string& p_direction, /*boost::shared_ptr<*/MotorController p_instanceObj)
+{
+    if (p_direction == "forward")
+    {
+        m_movementThread = boost::thread(&MotorController::moveForward, &p_instanceObj);
+    }
 }
 
 void MotorController::moveForward()
@@ -15,12 +27,13 @@ void MotorController::moveForward()
     // Write the pins to high
     while(m_leftMotorState == false && m_rightMotorState == false)
     {
-        m_header.doWrite(m_gpioPins[0], "1");
-        m_header.doWrite(m_gpioPins[1], "1");
+        std::cout << "Running motors" << std::endl;
+        m_header->doWrite(m_leftPin, "1");
+        m_header->doWrite(m_rightPin, "1");
     }
     // write the pins to low we are done moving forward.
-    m_header.doWrite(m_gpioPins[0], "0");
-    m_header.doWrite(m_gpioPins[1], "0");
+    m_header->doWrite(m_leftPin, "0");
+    m_header->doWrite(m_rightPin, "0");
 
     // reset motors for running
     m_leftMotorState = false;
@@ -31,4 +44,6 @@ void MotorController::stop()
 {
     m_leftMotorState = true;
     m_rightMotorState = true;
+    std::cout << "Waiting for thread to join" << std::endl;
+    m_movementThread.join();
 }

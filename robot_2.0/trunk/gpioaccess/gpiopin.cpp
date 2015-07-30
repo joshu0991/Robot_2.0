@@ -65,7 +65,6 @@ void GPIOPin::setUpPinDirection(const std::string& dir)
     {
         std::cerr << "FAILED TO SET GPIO PIN DIRECTION" << std::endl;
     }
-    std::cout << "------------- direction " << dir << std::endl;
     stream << dir;
     stream.close();
 }

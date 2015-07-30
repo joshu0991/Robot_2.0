@@ -1,5 +1,8 @@
+#include <vector>
+
 #include "gpioaccess/pinmanager/pinmanager.hpp"
 #include "gpioaccess/gpiopin.hpp"
+
 #include <boost/cstdint.hpp>
 
 
@@ -14,18 +17,15 @@ class WriteHeader : PinManager
 	
 public:
     //! \param[in] vector containing a list of the pins that the user of this class needs to write to.
-    WriteHeader(std::string p_pinList[]);
+    WriteHeader(std::vector<std::string> p_pinList);
 
     //! calls the write function appropratly that is implemented by the user of this class.
     virtual void doWrite(const std::string& p_pinNumber, const std::string& p_state);
     
     //! Does nothing.
-    virtual ~WriteHeader()
-    {
-	}
+    virtual ~WriteHeader();
 
 private:
     //! Set up all of the pins
-    bool initilize(std::string p_pinList[]);
-	
+    bool initilize(std::vector<std::string> p_pinList);
 };

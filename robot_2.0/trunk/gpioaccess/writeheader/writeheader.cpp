@@ -1,25 +1,29 @@
 #include "writeheader.hpp"
 
-WriteHeader::WriteHeader(std::string p_pinList[])
+WriteHeader::WriteHeader(std::vector<std::string> p_pinList)
 {
     initilize(p_pinList);
 }
 
-bool WriteHeader::initilize(std::string p_pinList[])
+WriteHeader::~WriteHeader()
 {
-    std::cout << "size of the init array to be smaller than " << sizeof(p_pinList)/sizeof(std::string) << std::endl;
-    for(boost::uint8_t i = 0; i < sizeof(p_pinList)/sizeof(std::string); ++i)
+}
+
+bool WriteHeader::initilize(std::vector<std::string> p_pinList)
+{
+    std::cout << "size of the init array to be smaller than " << p_pinList.size() <<" Zero element " << p_pinList[0] << " element one " << p_pinList[1]  << std::endl;
+    for(boost::uint8_t i = 0; i < p_pinList.size(); ++i)
     {
         if(!checkForPin(p_pinList[i]))
         {
             std::cout << "adding pin" << std::endl;
             return addPin(p_pinList[i], "out");
         }
-        else 
         {
             return false;
         }
     }
+    return false;
 }
 
 void WriteHeader::doWrite(const std::string& p_pinNumber, const std::string& p_state)
