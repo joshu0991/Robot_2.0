@@ -4,7 +4,7 @@
 #include <cstring>
 
 #include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
+#include <boost/thread/thread.hpp>
 
 #include "gpioaccess/gpiopin.hpp"
 #include "gpioaccess/pinmanager/pinmanager.hpp"
