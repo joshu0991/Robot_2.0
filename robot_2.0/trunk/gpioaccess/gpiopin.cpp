@@ -21,6 +21,7 @@ GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) :
 //! **Virtual** Need to unexport the pins that are in use. 
 GPIOPin::~GPIOPin()
 {
+    std::cout << "GPIO Destructor executing" << std::endl;
     unexportPin();
 }	
 
@@ -30,6 +31,7 @@ bool GPIOPin::exportPin()
     const std::string pathToExport = "/sys/class/gpio/export";
     // has to be a c string to write to file sys.
     std::ofstream stream(pathToExport.c_str());
+    std::cout << "----------------------Exported pin " << std::endl;
     if(stream < 0)
     {
         std::cerr << "Failed to export pin" << std::endl;
@@ -71,11 +73,14 @@ void GPIOPin::setUpPinDirection(const std::string& dir)
 
 void GPIOPin::write(const std::string& p_state)
 {
+    std::cout << "----------WRITE FUCTION CALLED" << std::endl;
     std::string path = "/sys/class/gpio/gpio" + m_gpioPin + "/value";
+    std::cout << "set the path " << std::endl;
     if(m_mode == "out")
     {
         std::cout << "Writing to pin" << std::endl;
         std::ofstream stream (path.c_str());
+        std::cout << "Established stream" << std::endl;
         if(stream < 0)
         {
             std::cout << "Failed to write" << std::endl;
@@ -85,6 +90,10 @@ void GPIOPin::write(const std::string& p_state)
             stream << p_state;
             stream.close();
         }
+    }
+    else
+    {
+        std::cout << "The mode was not properly set" << std::endl;
     }
 }
 

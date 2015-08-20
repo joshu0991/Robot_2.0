@@ -38,7 +38,7 @@ private:
     
 private:
     //! The pin this class will be managing.
-    const std::string& m_gpioPin;
+    const std::string m_gpioPin;
     
     //! Wheather this pin is set up to read or write.
     const std::string m_mode;

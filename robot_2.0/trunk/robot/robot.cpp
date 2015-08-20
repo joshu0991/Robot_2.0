@@ -10,13 +10,17 @@ int main()
     // All of the pins used in the program
     std::vector<std::string> pins;
     pins.push_back("18");
-    pins.push_back("19");
+    pins.push_back("23");
     boost::shared_ptr<WriteHeader> header(new WriteHeader(pins));
     
-    //Instantiate with all of the pins and the two we should access for motor control
+    std::cin.ignore();
+    // Instantiate with all of the pins and the two we should access for motor control
     MotorController motors(header, pins[0], pins[1]);
+    motors.controller("forward");
+    std::cin.ignore();
+//    motors.joinThread();
 //    motors.moveForward();
-//    motors.stop(); 
+    motors.stop(); 
     return 0;    
 }
 

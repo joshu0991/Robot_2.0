@@ -14,16 +14,18 @@ MotorController::~MotorController()
 {
 }
 
-void MotorController::controller(const std::string& p_direction, /*boost::shared_ptr<*/MotorController p_instanceObj)
+void MotorController::controller(const std::string& p_direction)
 {
+std::cout << "Made it to function" << std::endl;
     if (p_direction == "forward")
     {
-        m_movementThread = boost::thread(&MotorController::moveForward, &p_instanceObj);
+        m_movementThread = boost::thread(&MotorController::moveForward, this);
     }
 }
 
 void MotorController::moveForward()
 {
+std::cout << "_------------Values " << m_header << std::endl;
     // Write the pins to high
     while(m_leftMotorState == false && m_rightMotorState == false)
     {

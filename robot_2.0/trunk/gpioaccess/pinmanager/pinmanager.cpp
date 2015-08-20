@@ -15,7 +15,7 @@ bool PinManager::addPin(const std::string& p_pinNumber, const std::string& p_mod
     // not found make a new pin object and insert it.
     if(it == m_pinsInUse.end())
     {
-        std::cout << "Inserting pin " << std::endl;
+        std::cout << "Inserting pin# " << p_pinNumber << std::endl;
         return insertPin(p_pinNumber, p_mode);
     }
     // pin found can't insert pin it's in use.
@@ -34,6 +34,7 @@ bool PinManager::insertPin(const std::string& p_pinNumber, const std::string& p_
     {
          m_pinsInUse.insert(std::make_pair<std::string, boost::shared_ptr<GPIOPin> >(p_pinNumber, pin));
         std::cout << "successfully inserted pin " << std::endl;
+        std::cout << "Pin number is  " << pin.get() << std::endl;
         return true;
      }
     else
@@ -85,7 +86,7 @@ boost::shared_ptr<GPIOPin> PinManager::getPin(const std::string& p_pinNumber)
     }
     else
     {
-        std::cout << "Found pin returning it." << std::endl;
+        std::cout << "Found pin returning it. pins address is "  << it->second << std::endl;
         return it->second;
     }
 }
