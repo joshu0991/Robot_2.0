@@ -53,6 +53,12 @@ private:
     //! Move the robot backward
     void moveBackward();
 
+    //! Rotate the robot left
+    void rotateLeft();
+
+    //! Rotate the robot right
+    void rotateRight();
+
 private:
     //! controls the left motor.
     bool m_leftMotorState;

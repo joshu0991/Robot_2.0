@@ -23,6 +23,10 @@ std::cout << "Made it to function" << std::endl;
     {
         m_movementThread = boost::thread(&MotorController::moveForward, this);
     }
+    else if (p_direction == "back")
+    {
+        m_movementThread = boost::thread(&MotorController::moveBackward, this);
+    }
 }
 
 void MotorController::moveForward()
@@ -62,6 +66,42 @@ void MotorController::moveBackward()
     }
     // write the pins to low we are done moving forward.
     m_header->doWrite(m_leftReversePin, "0");
+    m_header->doWrite(m_rightReversePin, "0");
+
+    // reset motors for running
+    m_leftMotorState = false;
+    m_rightMotorState = false;
+}
+
+void MotorController::rotateLeft()
+{
+    // Write the pins to high
+    while(m_leftMotorState == false && m_rightMotorState == false)
+    {
+        std::cout << "Running motors" << std::endl;
+        m_header->doWrite(m_leftReversePin, "1");
+        m_header->doWrite(m_rightForwardPin, "1");
+    }
+    // write the pins to low we are done moving forward.
+    m_header->doWrite(m_leftReversePin, "0");
+    m_header->doWrite(m_rightForwardPin, "0");
+
+    // reset motors for running
+    m_leftMotorState = false;
+    m_rightMotorState = false;
+}
+
+void MotorController::rotateRight()
+{
+    // Write the pins to high
+    while(m_leftMotorState == false && m_rightMotorState == false)
+    {
+        std::cout << "Running motors" << std::endl;
+        m_header->doWrite(m_leftForwardPin, "1");
+        m_header->doWrite(m_rightReversePin, "1");
+    }
+    // write the pins to low we are done moving forward.
+    m_header->doWrite(m_leftForwardPin, "0");
     m_header->doWrite(m_rightReversePin, "0");
 
     // reset motors for running
