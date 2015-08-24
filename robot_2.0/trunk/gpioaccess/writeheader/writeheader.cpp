@@ -2,7 +2,10 @@
 
 WriteHeader::WriteHeader(std::vector<std::string> p_pinList)
 {
-    initilize(p_pinList);
+    if (!(initilize(p_pinList)))
+    {
+        std::cout << "Failed to init pin" << std::endl;
+    }
 }
 
 WriteHeader::~WriteHeader()
@@ -27,7 +30,7 @@ bool WriteHeader::initilize(std::vector<std::string> p_pinList)
 void WriteHeader::doWrite(const std::string& p_pinNumber, const std::string& p_state)
 {
     boost::shared_ptr<GPIOPin> pin = getPin(p_pinNumber);
-    if(pin)
+    if (pin)
     {
         std::cout << "successfully writing: pin value is  " << pin <<  std::endl;
         pin->write(p_state);

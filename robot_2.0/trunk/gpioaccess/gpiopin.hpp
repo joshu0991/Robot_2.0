@@ -21,8 +21,8 @@ public:
 
     std::string getMode()
     {
-		return m_mode;
-	}
+        return m_mode;
+    }
 
     //! default write to a pin
     void write(const std::string& p_state);

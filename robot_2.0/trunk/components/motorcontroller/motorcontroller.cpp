@@ -27,6 +27,14 @@ std::cout << "Made it to function" << std::endl;
     {
         m_movementThread = boost::thread(&MotorController::moveBackward, this);
     }
+    else if (p_direction == "rleft")
+    {
+        m_movementThread = boost::thread(&MotorController::rotateLeft, this);
+    }
+    else if (p_direction == "rright")
+    {
+        m_movementThread = boost::thread(&MotorController::rotateRight, this);
+    } 
 }
 
 void MotorController::moveForward()

@@ -19,7 +19,7 @@ public:
     //! \param[in] vector containing a list of the pins that the user of this class needs to write to.
     WriteHeader(std::vector<std::string> p_pinList);
 
-    //! calls the write function appropratly that is implemented by the user of this class.
+    //! calls the write function for the given gpio pin.
     virtual void doWrite(const std::string& p_pinNumber, const std::string& p_state);
     
     //! Does nothing.
