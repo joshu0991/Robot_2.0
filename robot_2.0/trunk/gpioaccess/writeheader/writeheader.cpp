@@ -1,5 +1,7 @@
 #include "writeheader.hpp"
 
+namespace gpioaccess {
+
 WriteHeader::WriteHeader(std::vector<std::string> p_pinList)
 {
     if (!(initilize(p_pinList)))
@@ -38,4 +40,4 @@ void WriteHeader::doWrite(const std::string& p_pinNumber, const std::string& p_s
     }
 }
 
-	
+} // gpioaccess

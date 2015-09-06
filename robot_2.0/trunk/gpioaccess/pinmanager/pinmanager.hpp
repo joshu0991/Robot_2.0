@@ -12,6 +12,8 @@
  *     for use to the pinsInUse set. Each module may read and write to multiple pins so we will force all modules 
  *     to implement both functions.
  */
+namespace gpioaccess {
+
 class PinManager
 {
 protected:
@@ -39,5 +41,8 @@ private:
 private:
     //! Only want one of these so we can determine which pins are in use and check for conflicts.
     boost::unordered_map<std::string, boost::shared_ptr<GPIOPin> > m_pinsInUse;
-};
+}; // PinManager
+
+
+} // gpioaccess
 #endif

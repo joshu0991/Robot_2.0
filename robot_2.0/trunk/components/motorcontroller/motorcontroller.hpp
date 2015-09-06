@@ -21,7 +21,7 @@ public:
         param[in] gpio pin for right motor
         param[in] p_header the object which owns the pins
     */
-    MotorController(boost::shared_ptr<WriteHeader> p_header, std::string& p_leftForwardPin, std::string& p_rightForwardPin, std::string& p_leftReversePin, std::string& p_rightReversePin);
+    MotorController(boost::shared_ptr<gpioaccess::WriteHeader> p_header, std::string& p_leftForwardPin, std::string& p_rightForwardPin, std::string& p_leftReversePin, std::string& p_rightReversePin);
 
     //! empty destructor
     ~MotorController();
@@ -67,7 +67,7 @@ private:
     bool m_rightMotorState;    
 
     //! Header for managing gpio pins.
-    boost::shared_ptr<WriteHeader> m_header;
+    boost::shared_ptr<gpioaccess::WriteHeader> m_header;
 
     //! the left forward motor gpio pin.
     std::string& m_leftForwardPin;

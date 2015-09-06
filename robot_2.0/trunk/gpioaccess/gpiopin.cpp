@@ -1,10 +1,13 @@
 #include "gpiopin.hpp"
 #include <string>
+
+namespace gpioaccess {
+
 //! Direction can be "in" or "out"
 GPIOPin::GPIOPin(const std::string& p_pinNum, const std::string& p_direction) : 
     m_gpioPin(p_pinNum),
-    m_mode(p_direction)
-
+    m_mode(p_direction),
+    m_scratchString()
 {
     bool exported = exportPin();
     std::cout << " exported is " << exported << " direction is " << p_direction << std::endl;
@@ -31,7 +34,6 @@ bool GPIOPin::exportPin()
     const std::string pathToExport = "/sys/class/gpio/export";
     // has to be a c string to write to file sys.
     std::ofstream stream(pathToExport.c_str());
-    std::cout << "----------------------Exported pin " << std::endl;
     if(stream < 0)
     {
         std::cerr << "Failed to export pin" << std::endl;
@@ -73,7 +75,6 @@ void GPIOPin::setUpPinDirection(const std::string& dir)
 
 void GPIOPin::write(const std::string& p_state)
 {
-    std::cout << "----------WRITE FUCTION CALLED" << std::endl;
     std::string path = "/sys/class/gpio/gpio" + m_gpioPin + "/value";
     std::cout << "set the path " << std::endl;
     if(m_mode == "out")
@@ -97,7 +98,7 @@ void GPIOPin::write(const std::string& p_state)
     }
 }
 
-void GPIOPin::read(std::string& p_return)
+boost::uint8_t GPIOPin::read()
 {
     std::string path = "/sys/class/gpio/gpio" + m_gpioPin +"/value";
     
@@ -106,20 +107,19 @@ void GPIOPin::read(std::string& p_return)
         std::ifstream stream (path.c_str());
         if(stream < 0)
         {
-             std::cout << "Failed to read" << std::endl;
+            return 2;
         }
-        else
+        stream >> m_scratchString;
+        stream.close();
+        if(m_scratchString != "0")
         {
-            stream >> p_return;
-            stream.close();
-            if(p_return != "0")
-            {
-                 p_return = "1";
-            }
-            else
-            {
-                p_return = "0";
-            }
+             m_scratchString.clear();
+             return 1;
         }
-    }			
+        m_scratchString.clear();
+        return 0;
+    }
+    return 2;			
 }
+
+} // gpioaccess

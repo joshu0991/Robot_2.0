@@ -1,5 +1,7 @@
 #include "pinmanager.hpp"
 
+namespace gpioaccess {
+
 PinManager::PinManager() :
     m_pinsInUse()
 {
@@ -90,3 +92,5 @@ boost::shared_ptr<GPIOPin> PinManager::getPin(const std::string& p_pinNumber)
         return it->second;
     }
 }
+
+} //gpioaccess

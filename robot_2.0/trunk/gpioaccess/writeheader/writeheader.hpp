@@ -1,3 +1,6 @@
+#ifndef WRITEHEADER_HPP
+#define WRITEHEADER_HPP
+
 #include <vector>
 
 #include "gpioaccess/pinmanager/pinmanager.hpp"
@@ -12,6 +15,9 @@
  *   to write to a pin a client moduel should inherit from this class implement how writing should be done and call doWrite.
  *   which in turn will call that write function. This class initializes all of the pins given to write and checks to make sure they aren't in use.
  */ 
+
+namespace gpioaccess {
+
 class WriteHeader : PinManager
 {
 	
@@ -29,3 +35,7 @@ private:
     //! Set up all of the pins
     bool initilize(std::vector<std::string> p_pinList);
 };
+
+} // gpioaccess
+
+#endif

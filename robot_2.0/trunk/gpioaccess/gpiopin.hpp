@@ -1,6 +1,8 @@
 #ifndef GPIOPIN_HPP
 #define GPIOPIN_HPP
 
+#include <boost/cstdint.hpp>
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -8,6 +10,9 @@
 /*!
  * \brief Class to manager an individual pin.
  */
+
+namespace gpioaccess {
+
 class GPIOPin
 {
 public:
@@ -28,7 +33,7 @@ public:
     void write(const std::string& p_state);
 
     //! default read from a pin
-    void read(std::string& p_return);
+    boost::uint8_t read();
 
 private:
     //! Functions needed for set up.
@@ -42,6 +47,10 @@ private:
     
     //! Wheather this pin is set up to read or write.
     const std::string m_mode;
+
+    std::string m_scratchString;
 };
+
+} // gpioaccess
 
 #endif // GPIOPIN_HPP

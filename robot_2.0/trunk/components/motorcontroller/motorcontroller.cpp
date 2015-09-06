@@ -1,6 +1,6 @@
 #include "motorcontroller.hpp"
 
-MotorController::MotorController(boost::shared_ptr<WriteHeader> p_header, std::string& p_leftForwardPin, std::string& p_rightForwardPin, std::string& p_leftReversePin, std::string& p_rightReversePin) :
+MotorController::MotorController(boost::shared_ptr<gpioaccess::WriteHeader> p_header, std::string& p_leftForwardPin, std::string& p_rightForwardPin, std::string& p_leftReversePin, std::string& p_rightReversePin) :
     m_leftMotorState(false),
     m_rightMotorState(false),
     m_header(p_header),
