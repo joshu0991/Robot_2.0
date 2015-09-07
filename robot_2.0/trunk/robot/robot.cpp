@@ -22,7 +22,10 @@ int main()
     Sonar sonar(writeHeader, readHeader, writePins[0], readPins[0]);
     boost::uint64_t dis = sonar.ping();
 
-    std::cout << "Distance is " << dis << std::endl;
+//    std::cout << "Distance from ping is " << dis << std::endl;
+
+    dis = sonar.ping30();
+    std::cout << "Distance from ping30 is " << dis << std::endl;
 
 
 

@@ -17,8 +17,9 @@ public:
     Sonar(boost::shared_ptr<gpioaccess::WriteHeader> p_writeHeader, boost::shared_ptr<gpioaccess::ReadHeader> p_readHeader, const std::string& p_trigger, const std::string& p_receiver);
 
     //! Send and receive a ping
-    boost::uint64_t ping();
+    double ping();
 
+    double ping30();
 private:
     //! init the module
     void setUp();

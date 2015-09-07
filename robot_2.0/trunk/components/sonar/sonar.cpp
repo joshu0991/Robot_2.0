@@ -4,6 +4,9 @@
 #include <boost/thread/thread.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#include <numeric>
+#include <vector>
+
 Sonar::Sonar(boost::shared_ptr<gpioaccess::WriteHeader> p_writeHeader, 
              boost::shared_ptr<gpioaccess::ReadHeader> p_readHeader, 
              const std::string& p_trigger, 
@@ -16,7 +19,7 @@ Sonar::Sonar(boost::shared_ptr<gpioaccess::WriteHeader> p_writeHeader,
     setUp();
 }
 
-boost::uint64_t Sonar::ping()
+double Sonar::ping()
 {
     boost::chrono::high_resolution_clock::time_point startTime, endTime; 
     bool receivedPulse = false;
@@ -46,15 +49,25 @@ boost::uint64_t Sonar::ping()
             receivedPulse = true;
         }
     }
-    std::cout << "Start time: " << startTime << std::endl;
-    std::cout << "end time: " << endTime << std::endl;
-    auto duration = boost::chrono::duration_cast<boost::chrono::nanoseconds>(endTime - startTime);
-    std:: cout << "-----------The time is in nano seconds" << (boost::chrono::duration_cast<boost::chrono::nanoseconds>(endTime - startTime).count()) << std::endl;
-    std:: cout << "-----------The time is in seconds" << (boost::chrono::duration_cast<boost::chrono::seconds>(endTime - startTime).count()) << std::endl;
+    //boost::chrono::duration<double> distance = 
+    boost::chrono::duration<double> time = endTime - startTime;
+    std::cout << "Time of ping" << time.count() << std::endl;
     // calculate distance speed of sound in air is ~34300 so D/(t/2) = 34300 because want the time for half the journey.
-    boost::chrono::seconds timeInSeconds = boost::chrono::duration_cast<boost::chrono::seconds>(duration);
-    std::cout << "TIME IN SECONDS CONVERTED " << timeInSeconds << std::endl;
-    return /*static_cast<boost::uint64_t>*/(timeInSeconds.count() * 17150);
+    return time.count() * 17150.0;
+}
+
+double Sonar::ping30()
+{
+
+    std::vector<double> values; 
+    for(boost::uint8_t i = 0; i < 30; ++i)
+    {
+        std::cout << "********************************** calling ping" << std::endl;
+        values.push_back(ping());
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+    }
+    double sum = std::accumulate(values.begin(), values.end(), 0);
+    return sum / 30;
 }
 
 void Sonar::setUp()
