@@ -1,5 +1,7 @@
 #include "pinmanager.hpp"
 
+#include <utility>
+
 namespace gpioaccess {
 
 PinManager::PinManager() :
@@ -32,9 +34,9 @@ bool PinManager::addPin(const std::string& p_pinNumber, const std::string& p_mod
 bool PinManager::insertPin(const std::string& p_pinNumber, const std::string& p_mode)
 {
     boost::shared_ptr<GPIOPin> pin(new GPIOPin(p_pinNumber, p_mode));
-    if(pin)
+    if (pin)
     {
-         m_pinsInUse.insert(std::make_pair<std::string, boost::shared_ptr<GPIOPin> >(p_pinNumber, pin));
+        m_pinsInUse.insert(std::make_pair(p_pinNumber, pin));
         std::cout << "successfully inserted pin " << std::endl;
         std::cout << "Pin number is  " << pin.get() << std::endl;
         return true;
