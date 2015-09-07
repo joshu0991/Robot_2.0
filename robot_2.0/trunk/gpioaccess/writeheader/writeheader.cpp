@@ -17,7 +17,6 @@ WriteHeader::~WriteHeader()
 bool WriteHeader::initilize(std::vector<std::string> p_pinList)
 {
     bool success = true;
-    std::cout << "size of the init array to be smaller than " << p_pinList.size() <<" Zero element " << p_pinList[0] << " element one " << p_pinList[1]  << std::endl;
     for(boost::uint8_t i = 0; i < p_pinList.size(); ++i)
     {
         if(!checkForPin(p_pinList[i]))

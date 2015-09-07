@@ -2,6 +2,7 @@
 #include "components/motorcontroller/motorcontroller.hpp"
 #include "components/sonar/sonar.hpp"
 #include "gpioaccess/readheader/readheader.hpp"
+#include "gpioaccess/writeheader/writeheader.hpp"
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
@@ -14,11 +15,10 @@ int main()
     readPins.push_back("27"); //receive pin
 
     std::vector<std::string> writePins;
-    writePins.push_back("18"); // trigger pin
+    writePins.push_back("17"); // trigger pin
 
     boost::shared_ptr<gpioaccess::ReadHeader> readHeader(new gpioaccess::ReadHeader(readPins));
     boost::shared_ptr<gpioaccess::WriteHeader> writeHeader(new gpioaccess::WriteHeader(writePins));
-
     Sonar sonar(writeHeader, readHeader, writePins[0], readPins[0]);
     boost::uint64_t dis = sonar.ping();
 
