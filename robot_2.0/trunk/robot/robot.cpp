@@ -13,7 +13,6 @@ int main()
 //////////////////////////Sonar test code
     std::vector<std::string> readPins;
     readPins.push_back("27"); //receive pin
-
     std::vector<std::string> writePins;
     writePins.push_back("17"); // trigger pin
 
@@ -25,6 +24,7 @@ int main()
 //    std::cout << "Distance from ping is " << dis << std::endl;
 
     dis = sonar.ping30();
+    std::cout.precision(5);
     std::cout << "Distance from ping30 is " << dis << std::endl;
 
 
