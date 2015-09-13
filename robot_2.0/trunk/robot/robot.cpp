@@ -19,13 +19,13 @@ int main()
     boost::shared_ptr<gpioaccess::ReadHeader> readHeader(new gpioaccess::ReadHeader(readPins));
     boost::shared_ptr<gpioaccess::WriteHeader> writeHeader(new gpioaccess::WriteHeader(writePins));
     Sonar sonar(writeHeader, readHeader, writePins[0], readPins[0]);
-    boost::uint64_t dis = sonar.ping();
-
-//    std::cout << "Distance from ping is " << dis << std::endl;
-
-    dis = sonar.ping30();
+    double dis = sonar.ping();
     std::cout.precision(5);
-    std::cout << "Distance from ping30 is " << dis << std::endl;
+    std::cout << "Distance from ping is " << dis << std::endl;
+
+//    dis = sonar.ping30();
+//    std::cout.precision(5);
+//    std::cout << "Distance from ping30 is " << dis << std::endl;
 
 
 
