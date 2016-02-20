@@ -1,11 +1,13 @@
 #include "thermometer.hpp"
 
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 #include <dirent.h>
 #include <fstream>
 #include <stdexcept>
 #include <ctime>
 
-Thermometer::Thermometer() : m_temperature(0), m_shutDown(false)
+Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
 {
 }
 
@@ -19,8 +21,8 @@ void Thermometer::initialize()
         while ( getline(bootFile, line) )
         {
             // check to see if this is the dtoverlay line
-            std::size_t result = line.find("dtoverlay"));
-            if (result != std::string::npos))
+            std::size_t result = line.find("dtoverlay");
+            if (result != std::string::npos)
             {
                 result = line.fine("w1-gpio");
                 if (result == std::string::npos)
@@ -43,7 +45,8 @@ void Thermometer::initialize()
         throw std::logic_error("Failed to initialize");
     }
 
-    //spawn member thread reading sensor need mutex!!!!
+    //spawn member thread reading sensor need mutex!!!!i
+    m_sensorThread = boost::thread(&Thermometer::readSensor, this);
 }
 
 void Thermometer::readSensor()
@@ -89,10 +92,12 @@ void Thermometer::readSensor()
         temperatureStream.clear();
         temperatureStream.seekg(0, ios::begin);
 
+        m_mutex.lock();
         m_temperature = convertTemperature(data);
-        
+        m_mutex.unlock();
+
         // only update every ten minutes.
-        sleep(600); 
+        boost::this_thread::sleep(boost::posix_time::seconds(600));
     }
 }
 
