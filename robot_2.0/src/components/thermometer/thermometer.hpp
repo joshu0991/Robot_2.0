@@ -1,10 +1,10 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
+#include <boost/thread/thread.hpp>
 #include <string>
 
-//! TODO add mutexes, spawn thread in initialize, make initialize private and 
-//! overload with public static version.
+//! TODO add mutexes, spawn thread in initialize. 
 
 class Thermometer
 {
@@ -20,11 +20,16 @@ public:
     void readSensor();
 
     //! \return the temperarue.
-    boost::uint32_t getTemperature()
+    double getTemperatureCelcius()
     {
         return m_temperature;
     }
 
+    double getTemperatureFarenheit()
+    {
+        return (m_temperature * (9 / 5)) + 32;
+    }
+ 
     void shutDown()
     {
         m_shutDown = true;
@@ -40,6 +45,10 @@ private:
     void initialize();
 
 private:
+    boost::thread m_sensorThread
+
+    boost::mutex m_mutex;;
+
     //! The current temperature in celcius
     double m_temperature;
 
