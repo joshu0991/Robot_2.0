@@ -2,10 +2,11 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#include <cstddef>
 #include <dirent.h>
 #include <fstream>
 #include <stdexcept>
-#include <ctime>
+#include <system_error>
 
 Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
 {
@@ -24,7 +25,7 @@ void Thermometer::initialize()
             std::size_t result = line.find("dtoverlay");
             if (result != std::string::npos)
             {
-                result = line.fine("w1-gpio");
+                result = line.find("w1-gpio");
                 if (result == std::string::npos)
                 {
                     throw std::logic_error("boot.txt does not contain the necessary content.");
@@ -51,14 +52,14 @@ void Thermometer::initialize()
 
 void Thermometer::readSensor()
 {
-    char[] path = "/sys/bus/w1/devices";
+    char path[] = "/sys/bus/w1/devices";
     DIR* directory = opendir(path);
     char sensorID[16];
     char devicePath[128];
     
     if (directory == NULL)
     {
-        throw std::system_error("failed to open directory");
+        throw std::system_error(EDOM, std::system_category());
     }
 
     while ((dirent = readdir(directory)))
@@ -130,7 +131,7 @@ double Thermometer::convertTemperature(const std::string& p_data)
     return static_cast<double>(atof(buffer));
 }
 
-boost::shared_ptr<Thermometer> Thermometer::initialize()
+boost::shared_ptr<Thermometer> Thermometer::thermometer()
 {
     static boost::shared_ptr<Thermometer> therm;
     if (!therm)

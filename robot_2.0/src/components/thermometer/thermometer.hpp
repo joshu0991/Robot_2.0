@@ -14,7 +14,7 @@ public:
         Initialize and return a thermometer object with the sensor being read.
             thermometer is a singleton this gets the only instance
     */
-    static boost::shared_ptr<Thermometer> initialize();
+    static boost::shared_ptr<Thermometer> thermometer();
  
     //! Read the ds18b20 and update the temperature variable.
     void readSensor();
@@ -36,7 +36,7 @@ public:
     }
 
     double convertTemperature(const std::string& p_data);
-    }
+
 private:
     //! Constructor
     Thermometer();
@@ -45,7 +45,7 @@ private:
     void initialize();
 
 private:
-    boost::thread m_sensorThread
+    boost::thread m_sensorThread;
 
     boost::mutex m_mutex;;
 
