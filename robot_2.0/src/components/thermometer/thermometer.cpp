@@ -11,7 +11,7 @@
 #include <system_error>
 
 //! Constructor
-Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
+Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0)
 {
 }
 
@@ -56,8 +56,11 @@ void Thermometer::initialize()
         throw std::logic_error("Failed to initialize");
     }
 
+    std::cout << "spawning temperature thread" << std::endl;
     //spawn member thread reading sensor need mutex!!!!i
     m_sensorThread = boost::thread(&Thermometer::readSensor, this);
+        
+boost::this_thread::sleep(boost::posix_time::seconds(3));
 }
 
 void Thermometer::readSensor()
@@ -95,7 +98,7 @@ void Thermometer::readSensor()
     std::string sensorData;
     std::ifstream temperatureStream(devicePath);
     // spawns on own thread in initialize...
-    while (!m_shutDown)
+    while (true)
     {
         getline(temperatureStream, sensorData);
         getline(temperatureStream, sensorData);
@@ -139,7 +142,9 @@ double Thermometer::convertTemperature(const std::string& p_data)
         ++tPosition;
         ++counter;
     }
-    return static_cast<double>(atof(buffer));
+    float returnValue = atof(buffer);
+    returnValue /= 1000;
+    return static_cast<double>(returnValue);
 }
 
 boost::shared_ptr<Thermometer> Thermometer::thermometer()
