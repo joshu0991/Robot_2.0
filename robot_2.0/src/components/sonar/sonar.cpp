@@ -34,7 +34,6 @@ double Sonar::ping()
         boost::uint64_t value = m_readHeader->doRead(m_receiver);
         if (value == 0)
         {
-            std::cout << "---------------------------pin is low " << std::endl;
             // Start time listining for a ping.
             if (receivedPulse)
             {
