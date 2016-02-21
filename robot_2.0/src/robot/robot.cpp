@@ -1,27 +1,37 @@
 #include "robot.hpp"
-#include "components/motorcontroller/motorcontroller.hpp"
 #include "components/sonar/sonar.hpp"
 #include "gpioaccess/readheader/readheader.hpp"
 #include "gpioaccess/writeheader/writeheader.hpp"
-#include <boost/shared_ptr.hpp>
 
 #include <vector>
 
+Robot::Robot() : m_thermometer(Thermometer::thermometer())
+{
+    double a = m_thermometer->getTemperatureFarenheit();
+    std::cout << "The temperture is: " << a << std::endl;
+    m_thermometer->shutDown();;
+}
+
 int main()
 {
+    Robot r;
+//! TODO change vector to something with associative indexes link unordered map
+
+///////////////////////////Temperature test code
+
 
 //////////////////////////Sonar test code
-    std::vector<std::string> readPins;
-    readPins.push_back("27"); //receive pin
-    std::vector<std::string> writePins;
-    writePins.push_back("17"); // trigger pin
+//    std::vector<std::string> readPins;
+//    readPins.push_back("27"); //receive pin
+//    std::vector<std::string> writePins;
+//    writePins.push_back("17"); // trigger pin
 
-    boost::shared_ptr<gpioaccess::ReadHeader> readHeader(new gpioaccess::ReadHeader(readPins));
-    boost::shared_ptr<gpioaccess::WriteHeader> writeHeader(new gpioaccess::WriteHeader(writePins));
-    Sonar sonar(writeHeader, readHeader, writePins[0], readPins[0]);
-    double dis = sonar.ping();
-    std::cout.precision(5);
-    std::cout << "Distance from ping is " << dis << std::endl;
+//    boost::shared_ptr<gpioaccess::ReadHeader> readHeader(new gpioaccess::ReadHeader(readPins));
+//    boost::shared_ptr<gpioaccess::WriteHeader> writeHeader(new gpioaccess::WriteHeader(writePins));
+//    Sonar sonar(writeHeader, readHeader, writePins[0], readPins[0]);
+//    double dis = sonar.ping();
+//    std::cout.precision(5);
+//    std::cout << "Distance from ping is " << dis << std::endl;
 
 //    dis = sonar.ping30();
 //    std::cout.precision(5);

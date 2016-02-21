@@ -16,29 +16,30 @@ public:
     */
     static boost::shared_ptr<Thermometer> thermometer();
  
-    //! Read the ds18b20 and update the temperature variable.
-    void readSensor();
 
     //! \return the temperarue in celcius.
     double getTemperatureCelcius()
     {
         m_mutex.lock();
-        return m_temperature;
+        double temperature = m_temperature;
         m_mutex.unlock();
+        return temperature;
     }
 
     //! \return the temp in farenheit
     double getTemperatureFarenheit()
     {
         m_mutex.lock();
-        return (m_temperature * (9 / 5)) + 32;
+        double temperature = ((m_temperature * 9) / 5) + 32;
         m_mutex.unlock();
+        return temperature;
     }
  
     //! Shutdown the sensor.
     void shutDown()
     {
-        m_shutDown = true;
+        m_sensorThread.interrupt();
+        m_sensorThread.join();
     }
 
     /*!
@@ -59,6 +60,9 @@ private:
     //! Class has pointer members made private to comply
     Thermometer(const Thermometer& therm);
 
+    //! Read the ds18b20 and update the temperature variable.
+    void readSensor();
+
     //! Add kernal modules and make sure environment is sane.
     void initialize();
 
@@ -75,10 +79,6 @@ private:
     //! Used for finding the sensor
     struct dirent *dirent;
 
-    //! Wheather or not to shutdown the thread
-    bool m_shutDown;
-
-    // need mutex and thread member
 };
 
 #endif
