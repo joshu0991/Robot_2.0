@@ -18,7 +18,6 @@ MotorController::~MotorController()
 
 void MotorController::controller(const std::string& p_direction)
 {
-std::cout << "Made it to function" << std::endl;
     if (p_direction == "forward")
     {
         m_movementThread = boost::thread(&MotorController::moveForward, this);
