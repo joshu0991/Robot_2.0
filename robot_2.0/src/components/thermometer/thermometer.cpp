@@ -1,6 +1,8 @@
 #include "thermometer.hpp"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/smart_ptr.hpp>
 
 #include <cstddef>
 #include <dirent.h>
@@ -9,6 +11,10 @@
 #include <system_error>
 
 Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
+{
+}
+
+Thermometer::~Thermometer()
 {
 }
 
@@ -71,6 +77,7 @@ void Thermometer::readSensor()
             strcpy(sensorID, dirent->d_name);
             (void) closedir(directory);
             sprintf(devicePath, "%s/%s/w1_slave", path, sensorID);
+
             // We'll only allow one temperature sensor.
             break;
         }
@@ -78,7 +85,7 @@ void Thermometer::readSensor()
 
     if (sensorID == NULL)
     {
-        throw std::logic_exception("Failed to find sensor directory");
+        throw std::logic_error("Did not find a sensor for temperature.");
     }
 
     std::string sensorData;
@@ -86,15 +93,15 @@ void Thermometer::readSensor()
     // spawns on own thread in initialize...
     while (!m_shutDown)
     {
-        getline(temperatureStream, data);
-        getline(temperatureStream, data);
+        getline(temperatureStream, sensorData);
+        getline(temperatureStream, sensorData);
         
         // Move back to the beginning
         temperatureStream.clear();
-        temperatureStream.seekg(0, ios::begin);
+        temperatureStream.seekg(0, std::ios::beg);
 
         m_mutex.lock();
-        m_temperature = convertTemperature(data);
+        m_temperature = convertTemperature(sensorData);
         m_mutex.unlock();
 
         // only update every ten minutes.
@@ -111,7 +118,7 @@ double Thermometer::convertTemperature(const std::string& p_data)
 
     while (counter < p_data.length())
     {
-        if (p_data[counter] = 't')
+        if (p_data[counter] == 't')
         {
             break;
         }
@@ -136,7 +143,7 @@ boost::shared_ptr<Thermometer> Thermometer::thermometer()
     static boost::shared_ptr<Thermometer> therm;
     if (!therm)
     {
-        therm(new Thermometer());
+        therm.reset(new Thermometer() );
         therm->initialize();
     } 
     return therm;
