@@ -1,13 +1,20 @@
 #include "thermometer.hpp"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/smart_ptr.hpp>
 
+#include <cstddef>
 #include <dirent.h>
 #include <fstream>
 #include <stdexcept>
-#include <ctime>
+#include <system_error>
 
 Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
+{
+}
+
+Thermometer::~Thermometer()
 {
 }
 
@@ -24,7 +31,7 @@ void Thermometer::initialize()
             std::size_t result = line.find("dtoverlay");
             if (result != std::string::npos)
             {
-                result = line.fine("w1-gpio");
+                result = line.find("w1-gpio");
                 if (result == std::string::npos)
                 {
                     throw std::logic_error("boot.txt does not contain the necessary content.");
@@ -51,14 +58,14 @@ void Thermometer::initialize()
 
 void Thermometer::readSensor()
 {
-    char[] path = "/sys/bus/w1/devices";
+    char path[] = "/sys/bus/w1/devices";
     DIR* directory = opendir(path);
     char sensorID[16];
     char devicePath[128];
     
     if (directory == NULL)
     {
-        throw std::system_error("failed to open directory");
+        throw std::system_error(EDOM, std::system_category());
     }
 
     while ((dirent = readdir(directory)))
@@ -70,6 +77,7 @@ void Thermometer::readSensor()
             strcpy(sensorID, dirent->d_name);
             (void) closedir(directory);
             sprintf(devicePath, "%s/%s/w1_slave", path, sensorID);
+
             // We'll only allow one temperature sensor.
             break;
         }
@@ -77,7 +85,7 @@ void Thermometer::readSensor()
 
     if (sensorID == NULL)
     {
-        throw std::logic_exception("Failed to find sensor directory");
+        throw std::logic_error("Did not find a sensor for temperature.");
     }
 
     std::string sensorData;
@@ -85,15 +93,15 @@ void Thermometer::readSensor()
     // spawns on own thread in initialize...
     while (!m_shutDown)
     {
-        getline(temperatureStream, data);
-        getline(temperatureStream, data);
+        getline(temperatureStream, sensorData);
+        getline(temperatureStream, sensorData);
         
         // Move back to the beginning
         temperatureStream.clear();
-        temperatureStream.seekg(0, ios::begin);
+        temperatureStream.seekg(0, std::ios::beg);
 
         m_mutex.lock();
-        m_temperature = convertTemperature(data);
+        m_temperature = convertTemperature(sensorData);
         m_mutex.unlock();
 
         // only update every ten minutes.
@@ -110,7 +118,7 @@ double Thermometer::convertTemperature(const std::string& p_data)
 
     while (counter < p_data.length())
     {
-        if (p_data[counter] = 't')
+        if (p_data[counter] == 't')
         {
             break;
         }
@@ -130,12 +138,12 @@ double Thermometer::convertTemperature(const std::string& p_data)
     return static_cast<double>(atof(buffer));
 }
 
-boost::shared_ptr<Thermometer> Thermometer::initialize()
+boost::shared_ptr<Thermometer> Thermometer::thermometer()
 {
     static boost::shared_ptr<Thermometer> therm;
     if (!therm)
     {
-        therm(new Thermometer());
+        therm.reset(new Thermometer() );
         therm->initialize();
     } 
     return therm;
