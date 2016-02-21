@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <system_error>
 
+//! Constructor
 Thermometer::Thermometer() : m_sensorThread(), m_mutex(), m_temperature(0), m_shutDown(false)
 {
 }
@@ -18,6 +19,9 @@ Thermometer::~Thermometer()
 {
 }
 
+/*!
+    Initialize private version check for enviornement conditions and add kernal mods
+*/
 void Thermometer::initialize()
 {
     bool found = false;
